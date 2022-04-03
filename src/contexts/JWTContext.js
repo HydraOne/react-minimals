@@ -1,8 +1,11 @@
 import { createContext, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 // utils
+// import {useNavigate} from "react-router-dom";
 import axios from '../utils/axios';
 import { isValidToken, setSession } from '../utils/jwt';
+import {PATH_DASHBOARD} from "../routes/paths";
+import {PATH_AFTER_LOGIN} from "../config";
 
 // ----------------------------------------------------------------------
 
@@ -64,6 +67,7 @@ AuthProvider.propTypes = {
 };
 
 function AuthProvider({ children }) {
+  // const navigate = useNavigate();
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -94,7 +98,7 @@ function AuthProvider({ children }) {
           });
         }
       } catch (err) {
-        console.error(err);
+        // console.error(err);
         dispatch({
           type: 'INITIALIZE',
           payload: {
@@ -109,19 +113,21 @@ function AuthProvider({ children }) {
   }, []);
 
   const login = async (email, password) => {
-    const response = await axios.post('/account/login', {
+    const response = await axios.post('/api/account/login', {
       "username":email,
       password,
     });
-    const { accessToken, user } = response.data;
+    const { token, user } = response.data;
 
-    setSession(accessToken);
+    setSession(token);
     dispatch({
       type: 'LOGIN',
       payload: {
         user,
       },
     });
+    // window.location.href=PATH_AFTER_LOGIN;
+    // navigate(PATH_AFTER_LOGIN, { replace: true });
   };
 
   const register = async (email, password, firstName, lastName) => {

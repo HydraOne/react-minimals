@@ -26,13 +26,13 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
+    email: Yup.string().required('Email must be a valid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
   });
 
   const defaultValues = {
-    email: 'demo@minimals.cc',
-    password: 'demo1234',
+    email: '',
+    password: '',
     remember: true,
   };
 
@@ -42,7 +42,7 @@ export default function LoginForm() {
   });
 
   const {
-    reset,
+    // reset,
     setError,
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -52,8 +52,7 @@ export default function LoginForm() {
     try {
       await login(data.email, data.password);
     } catch (error) {
-      console.error(error);
-      reset();
+      // reset();
       if (isMountedRef.current) {
         setError('afterSubmit', error);
       }
@@ -63,7 +62,7 @@ export default function LoginForm() {
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
-        {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
+        {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.msg}</Alert>}
 
         <RHFTextField name="email" label="Email address" />
 

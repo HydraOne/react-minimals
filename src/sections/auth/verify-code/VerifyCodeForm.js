@@ -10,6 +10,8 @@ import { OutlinedInput, Stack } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
+import axios from "../../../utils/axios";
+import {PATH_LOGIN_SUCCESS} from "../../../config";
 
 // ----------------------------------------------------------------------
 
@@ -57,12 +59,15 @@ export default function VerifyCodeForm() {
 
   const onSubmit = async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      const token = localStorage.getItem('accessToken');
+      const code = data.code1 + data.code2 + data.code3 + data.code4 + data.code5 + data.code6;
+      await axios.post('/api/checkCaptchaCode',{token,code});
+      // await new Promise((resolve) => setTimeout(resolve, 500));
       console.log('code:', Object.values(data).join(''));
 
       enqueueSnackbar('Verify success!');
 
-      navigate(PATH_DASHBOARD.root, { replace: true });
+      navigate(PATH_LOGIN_SUCCESS, { replace: true });
     } catch (error) {
       console.error(error);
     }

@@ -11,6 +11,7 @@ import Page from '../../components/Page';
 import Iconify from '../../components/Iconify';
 // sections
 import { VerifyCodeForm } from '../../sections/auth/verify-code';
+import axios from "../../utils/axios";
 
 // ----------------------------------------------------------------------
 
@@ -35,6 +36,7 @@ export default function VerifyCode() {
               size="small"
               component={RouterLink}
               to={PATH_AUTH.login}
+              // onClick={()=>window.location.href=PATH_AUTH.login}
               startIcon={<Iconify icon={'eva:arrow-ios-back-fill'} width={20} height={20} />}
               sx={{ mb: 3 }}
             >
@@ -55,7 +57,7 @@ export default function VerifyCode() {
 
             <Typography variant="body2" align="center">
               Don’t have a code? &nbsp;
-              <Link variant="subtitle2" underline="none" onClick={() => {}}>
+              <Link variant="subtitle2" underline="none" onClick={sendVerifyCode()}>
                 Resend code
               </Link>
             </Typography>
@@ -64,4 +66,9 @@ export default function VerifyCode() {
       </RootStyle>
     </Page>
   );
+}
+
+function sendVerifyCode(){
+  const token = localStorage.getItem('accessToken');
+  axios.get(`/api/sendCaptchaCode/${token}`);
 }

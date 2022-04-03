@@ -9,7 +9,7 @@ import GuestGuard from '../guards/GuestGuard';
 import AuthGuard from '../guards/AuthGuard';
 // import RoleBasedGuard from '../guards/RoleBasedGuard';
 // config
-import { PATH_AFTER_LOGIN } from '../config';
+import {PATH_AFTER_LOGIN, PATH_LOGIN_SUCCESS} from '../config';
 // components
 import LoadingScreen from '../components/LoadingScreen';
 
@@ -63,6 +63,7 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
+        // { element: <Navigate to={PATH_LOGIN_SUCCESS} replace />, index: true },
         { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
         { path: 'app', element: <GeneralApp /> },
         { path: 'ecommerce', element: <GeneralEcommerce /> },
