@@ -15,6 +15,7 @@ import { fData } from '../../../../utils/formatNumber';
 import { countries } from '../../../../_mock';
 // components
 import { FormProvider, RHFSwitch, RHFSelect, RHFTextField, RHFUploadAvatar } from '../../../../components/hook-form';
+import axios from "../../../../utils/axios";
 
 // ----------------------------------------------------------------------
 
@@ -52,9 +53,10 @@ export default function AccountGeneral() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = async () => {
+  const onSubmit = async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      // await new Promise((resolve) => setTimeout(resolve, 500));
+      await axios.post("/api/user/update",data)
       enqueueSnackbar('Update success!');
     } catch (error) {
       console.error(error);
@@ -65,7 +67,20 @@ export default function AccountGeneral() {
     (acceptedFiles) => {
       const file = acceptedFiles[0];
 
+
       if (file) {
+        // axios.post("/api/demo/upload",{"bucketName":"demo"})
+        const forms = new FormData()
+        const configs = {
+          headers:{'Content-Type':'multipart/form-data'}
+        };
+
+        forms.append('file',file);
+        forms.append('bucketName','demo');
+
+        axios.post("/api/file/uploadAvatar",forms ,configs).then(res=>{
+          console.log(res)
+        });
         setValue(
           'photoURL',
           Object.assign(file, {

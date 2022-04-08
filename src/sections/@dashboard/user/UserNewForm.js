@@ -105,6 +105,12 @@ export default function UserNewForm({ isEdit, currentUser }) {
     (acceptedFiles) => {
       const file = acceptedFiles[0];
 
+
+      // axios.post("/api/demo/upload", {"bucketName": "demo", file}, {
+      //     headers: {'Content-Type': 'multipart/form-data'}
+      // }).then(r => {
+      //     console.log(r);
+      // });
       if (file) {
         setValue(
           'avatarUrl',
@@ -114,8 +120,9 @@ export default function UserNewForm({ isEdit, currentUser }) {
         );
       }
     },
-    [setValue]
+    []
   );
+
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>

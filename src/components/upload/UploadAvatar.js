@@ -8,6 +8,7 @@ import { styled } from '@mui/material/styles';
 import Image from '../Image';
 import Iconify from '../Iconify';
 import RejectionFiles from './RejectionFiles';
+// import {useEffect} from "react";
 
 // ----------------------------------------------------------------------
 
@@ -65,10 +66,12 @@ UploadAvatar.propTypes = {
 };
 
 export default function UploadAvatar({ error, file, helperText, sx, ...other }) {
-  const { getRootProps, getInputProps, isDragActive, isDragReject, fileRejections } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive, isDragReject, fileRejections} = useDropzone({
     multiple: false,
     ...other,
   });
+
+
 
   return (
     <>

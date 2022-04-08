@@ -63,8 +63,8 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
-        // { element: <Navigate to={PATH_LOGIN_SUCCESS} replace />, index: true },
-        { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
+        { element: <Navigate to={PATH_LOGIN_SUCCESS} replace />, index: true },
+        // { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
         { path: 'app', element: <GeneralApp /> },
         { path: 'ecommerce', element: <GeneralEcommerce /> },
         { path: 'analytics', element: <GeneralAnalytics /> },
